@@ -6,7 +6,7 @@ __pycache__/
 .venv/
 
 # Logs
-/src/logs/
+logs/
 
 # Environment variables
 .env

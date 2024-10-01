@@ -17,7 +17,7 @@ def main():
 
     # Set up logging
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+    log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logs")
     log_file = setup_logging(log_dir, timestamp)
 
     logging.info(f"Starting translation process for files in {args.path}")

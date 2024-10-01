@@ -4,10 +4,12 @@ This script uses Anthropic's Claude AI model to translate files in various forma
 
 ## Features
 
-- Supports multiple file formats: JSON, XML, XLIFF, TXT, and Markdown
-- Automatically detects target language from file names
-- Fallback to a default language if not specified in the file name
-- Logs detailed information about the translation process
+Supports multiple file formats:
+- JSON
+- XML
+- XLIFF
+- TXT
+- Markdown
 
 ## Requirements
 
@@ -39,13 +41,13 @@ This script uses Anthropic's Claude AI model to translate files in various forma
 
 5. Run the script:
    ```
-   python main.py --path /path/to/files --model claude-3-haiku-20240307 --default-lang en
+   python run.py --path /path/to/files --model claude-3-haiku-20240307 --default-lang en
    ```
 
 ## Usage
 
 ```
-python main.py [--path PATH] [--model MODEL] [--default-lang LANG]
+python run.py [--path PATH] [--model MODEL] [--default-lang LANG]
 ```
 
 ### Arguments
@@ -57,7 +59,27 @@ python main.py [--path PATH] [--model MODEL] [--default-lang LANG]
 For more information, run:
 
 ```
-python main.py --help
+python run.py --help
+```
+
+## Project Structure
+
+```
+ai-file-translator/
+├── src/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── file_processors.py
+│   ├── translation.py
+│   └── language_utils.py
+├── logs/
+├── tests/
+├── .env
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── run.py
+└── setup.sh
 ```
 
 ## Supported File Formats

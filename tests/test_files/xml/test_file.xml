@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<website>
+  <header>
+    <title>Bienvenido a nuestro sitio web
+Descubre características asombrosas
+Este es un párrafo de muestra para probar la traducción de XML.
+Interfaz amigable para el usuario
+Capacidades de búsqueda avanzadas
+Diseño adaptable a dispositivos móviles
+© 2024 Empresa de ejemplo. Todos los derechos reservados</title>
+    <subtitle>Descubre características asombrosas
+Este es un párrafo de muestra para probar la traducción de XML.
+Interfaz amigable para el usuario
+Capacidades de búsqueda avanzadas
+Diseño adaptable a dispositivos móviles
+© 2024 Empresa de ejemplo. Todos los derechos reservados</subtitle>
+  </header>
+  <content>
+    <paragraph>Este es un párrafo de muestra para probar la traducción de XML.
+Interfaz amigable para el usuario
+Capacidades de búsqueda avanzadas
+Diseño adaptable a dispositivos móviles
+© 2024 Empresa de ejemplo. Todos los derechos reservados</paragraph>
+    <features>
+      <item>Interfaz amigable para el usuario
+Capacidades de búsqueda avanzadas
+Diseño adaptable a dispositivos móviles
+© 2024 Empresa de ejemplo. Todos los derechos reservados</item>
+      <item>Capacidades de búsqueda avanzadas
+Diseño adaptable a dispositivos móviles
+© 2024 Empresa de ejemplo. Todos los derechos reservados</item>
+      <item>Diseño adaptable a dispositivos móviles
+© 2024 Empresa de ejemplo. Todos los derechos reservados</item>
+    </features>
+  </content>
+  <footer>
+    <copyright>© 2024 Empresa de ejemplo. Todos los derechos reservados.</copyright>
+  </footer>
+</website>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="test_file">
+    <header>
+      <tool tool-id="ai-translator" tool-name="AI Translator"/>
+    </header>
+    <body>
+      <trans-unit id="1">
+        <source>Welcome to our application</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Please enter your username and password to log in.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Forgot your password?</source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

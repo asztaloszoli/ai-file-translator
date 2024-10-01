@@ -1,0 +1,11 @@
+{
+  "content": {
+    "title": "Welcome to Our Website",
+    "description": "This is a sample description for testing purposes.",
+    "features": [
+      "Easy to use interface",
+      "Powerful search functionality",
+      "Responsive design"
+    ]
+  }
+}

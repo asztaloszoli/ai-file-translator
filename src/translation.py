@@ -1,8 +1,9 @@
+import os
 import anthropic
 import re
-import os
 import tiktoken
 from typing import List, Tuple
+from dotenv import load_dotenv
 
 def print_safe(text: str):
     """Biztonságos kiírás, ami kezeli a kódolási hibákat"""
@@ -32,7 +33,7 @@ def estimate_cost(texts: List[str]) -> Tuple[float, float]:
     
     return input_cost, output_cost
 
-def batch_translate_texts(texts: List[str], target_lang: str, model: str = 'claude-2', batch_size: int = 10) -> List[str]:
+def batch_translate_texts(texts: List[str], target_lang: str, model: str = 'claude-3-haiku-20240307', batch_size: int = 10) -> List[str]:
     """
     Szövegek fordítása batch-ekben
     :param texts: Fordítandó szövegek listája
@@ -43,12 +44,20 @@ def batch_translate_texts(texts: List[str], target_lang: str, model: str = 'clau
     """
     print_safe("\nInitializing translation...")
     
-    # Az Anthropic API kulcsot itt kell beírni. Az API kulcs az Anthropic fiókodhoz tartozik, és a fordítási kérelmek hitelesítésére szolgál.
-    api_key = ""
+    # Betöltjük a környezeti változókat
+    load_dotenv()
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    
+    if not api_key:
+        print_safe("Error: No API key found in .env file")
+        return texts
+        
     print_safe("API key loaded successfully")
     
     try:
-        client = anthropic.Client(api_key=api_key)
+        client = anthropic.Client(
+            api_key=api_key,
+        )
     except Exception as e:
         print_safe(f"Error initializing Anthropic client: {str(e)}")
         return texts
@@ -77,15 +86,7 @@ def batch_translate_texts(texts: List[str], target_lang: str, model: str = 'clau
     if response.lower() != 'y':
         print_safe("Translation cancelled by user")
         return texts
-    
-    # Összeállítjuk a prompt-ot
-    system_prompt = """You are a professional translator. Follow these rules when translating from French to Hungarian:
-1. Keep technical terms and proper nouns (like HDPC, Hangar, Cargo) unchanged
-2. Use appropriate gaming terminology
-3. Keep the translation natural but maintain the sci-fi atmosphere
-4. ONLY return the translation, no explanations
-5. Keep the same formatting (capitalization, punctuation)"""
-    
+
     translated_texts = []
     current_cost = 0.0
     
@@ -114,17 +115,31 @@ def batch_translate_texts(texts: List[str], target_lang: str, model: str = 'clau
                 print_safe(f"\nTranslating text: {text}")
                 
                 message = client.messages.create(
-                    model=model,
                     max_tokens=1000,
+                    model=model,
                     temperature=0,
-                    system=system_prompt,
-                    messages=[{
-                        "role": "user",
-                        "content": f"Translate this French text to Hungarian:\n\n{text}"
-                    }]
+            system="""You are a professional translator. Follow these rules:
+1. Keep technical terms and proper nouns unchanged
+2. Use appropriate gaming terminology
+3. Keep the translation natural but maintain the sci-fi atmosphere
+4. ONLY return the translation, no explanations
+5. Keep the same formatting (capitalization, punctuation)
+6. Translate to Hungarian with proper Hungarian grammar and terminology""",
+            messages=[
+                {
+                    "role": "user", 
+                    "content": f"Translate this text to Hungarian:\n{text}"
+                }
+            ]
                 )
                 
-                translated_text = message.content[0].text.strip()
+                # Extract text from TextBlock response
+                response = message.content
+                if isinstance(response, list) and len(response) > 0:
+                    translated_text = response[0].text
+                else:
+                    translated_text = str(response)
+                
                 print_safe(f"Original: {text}")
                 print_safe(f"Translated: {translated_text}")
                 batch_translations.append(translated_text)

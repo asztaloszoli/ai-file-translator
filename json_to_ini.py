@@ -56,26 +56,20 @@ def fix_encoding(text):
     return text
 
 def fix_line_endings(text):
-    # Először eltávolítjuk a felesleges sortöréseket
-    text = text.replace('\\n\\n', '\\n')
-    
-    # Ha a sor végén van \n, eltávolítjuk
-    text = text.rstrip('\\n')
-    
-    # A megmaradt \n karaktereket valódi sortörésre cseréljük
-    if '\\n' in text:
-        parts = text.split('\\n')
-        # Eltávolítjuk az üres részeket
-        parts = [p.strip() for p in parts if p.strip()]
-        text = '\n'.join(parts)
-    
+    # A \n karaktereket szóközre cseréljük
+    text = text.replace('\\n', ' ')
+    # Többszörös szóközöket egy szóközre cseréljük
+    text = ' '.join(text.split())
     return text
 
 def json_to_ini(json_file, ini_file):
+    print(f"JSON fájl beolvasása: {json_file}")
     # Beolvassuk a JSON fájlt
     with open(json_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    print(f"JSON fájl sikeresen beolvasva, {len(data)} kulcs található benne")
     
+    print(f"INI fájl létrehozása: {ini_file}")
     # Kiírjuk INI formátumban
     with open(ini_file, 'w', encoding='utf-8') as f:
         for key, value in data.items():
@@ -87,15 +81,13 @@ def json_to_ini(json_file, ini_file):
                 value = fix_encoding(value)
                 value = fix_line_endings(value)
                 
-                # Ha több soros a szöveg, minden sort új sorba írunk
-                if '\n' in value:
-                    lines = value.split('\n')
-                    f.write(f"{key}={lines[0]}\n")
-                    for line in lines[1:]:
-                        f.write(f"{line}\n")
-                else:
-                    f.write(f"{key}={value}\n")
+                # Minden értéket egy sorba írunk
+                f.write(f"{key}={value}\n")
+    print(f"Az INI fájl sikeresen létrehozva: {ini_file}")
 
 if __name__ == "__main__":
-    json_to_ini('tests/test_files/json/global_first100_test2.json', 
-                'tests/test_files/ini/global_first100_hu_fromjson.ini')
+    import sys
+    if len(sys.argv) != 3:
+        print("Használat: python json_to_ini.py input.json output.ini")
+        sys.exit(1)
+    json_to_ini(sys.argv[1], sys.argv[2])

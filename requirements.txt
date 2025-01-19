@@ -1,2 +1,4 @@
 anthropic==0.34.2
 language-tags==1.2.0
+tiktoken
+langdetect
